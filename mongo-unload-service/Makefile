@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022 by Delphix. All rights reserved.
+# Copyright (c) 2022, 2023 by Delphix. All rights reserved.
 #
 .PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build install version docker-image docker-run docker-stop docker-rm docker-start export-requirements
 
@@ -62,7 +62,7 @@ tests:
 	@# Help: Installs the dev dependencies using poetry
 	-@echo 'Installing Dependencies...'
 	@$(PYTHON) -m pip install --upgrade pip
-	@$(PIP) install poetry
+	@$(PIP) install poetry==1.5.1
 	@$(POETRY) config virtualenvs.in-project true
 	@$(POETRY) config --list
 	@$(POETRY) install --no-root
