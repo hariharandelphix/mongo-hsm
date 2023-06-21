@@ -47,6 +47,7 @@ repos:
             db-files/unload-db.sqlite|
             db-files/fast-api-generate/jinja-templates/api-with-doc.jinja2|
             mongo-unload-service/tests/.coveragerc|
+            mongo-unload-service/poetry.lock|
           )$
 
   - repo: local

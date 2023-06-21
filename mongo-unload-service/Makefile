@@ -1,12 +1,13 @@
 #
 # Copyright (c) 2022 by Delphix. All rights reserved.
 #
-.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build install version docker-image docker-run docker-stop docker-rm docker-start
+.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build install version docker-image docker-run docker-stop docker-rm docker-start export-requirements
 
 ROOT_DIR := $(shell pwd)
-VENV := venv
+VENV := .venv
 PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
+POETRY := $(VENV)/bin/poetry
 UVICORN := $(VENV)/bin/uvicorn
 red := $(shell tput setaf 1)
 reset := $(shell tput sgr0)
@@ -55,13 +56,21 @@ tests:
 --create_virtual_env: --check_python
 	@# Help: Creates a virtual environment
 	-@echo 'Creating Virtual environment'
-	@python3.9 -m venv venv || echo 'Python env already exists'
+	@python3.9 -m venv $(VENV) || echo 'Python env already exists'
 
---install_dependencies: requirements.txt
-	@# Help: Installs the dependencies from requirements.txt
+--install_dependencies:
+	@# Help: Installs the dev dependencies using poetry
 	-@echo 'Installing Dependencies...'
 	@$(PYTHON) -m pip install --upgrade pip
-	@$(PIP) install -r requirements.txt --no-cache-dir
+	@$(PIP) install poetry
+	@$(POETRY) config virtualenvs.in-project true
+	@$(POETRY) config --list
+	@$(POETRY) install --no-root
+
+export-requirements:
+	@# Help: Exports the python dependencies from poetry to requirements.txt
+	@$(POETRY) export -o requirements.txt
+
 
 env: --create_virtual_env --install_dependencies
 	@# Help: Creates a virtual environment with python3.9 if not already present and activates it
@@ -70,8 +79,7 @@ env: --create_virtual_env --install_dependencies
 
 clean_env:
 	@# Help: Clean the virtual env that was created
-	-@$(VENV)/bin/pre-commit uninstall
-	-@rm -rf venv
+	-@rm -rf $(VENV)
 
 clean_build:
 	@# Help: Cleans the build files
@@ -113,7 +121,8 @@ docker-stop:
 docker-rm: docker-stop
 	@# Help: Removes the docker container
 	-@docker rm $(DOCKER_CONTAINER_NAME)
-	-@echo "Removed the container"
+	-@docker image rm $(DOCKER_IMAGE_NAME)
+	-@echo "Removed the container and image"
 
 --export_lang:
 	LC_ALL=en_AU.UTF-8
