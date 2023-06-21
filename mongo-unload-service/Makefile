@@ -15,6 +15,8 @@ SITE_PACKAGE_PATH := $(VENV)/lib/python3.9/site-packages
 REPO := https://artifactory.delphix.com/artifactory/api/pypi/delphix-local
 DOCKER_CONTAINER_NAME := mongo-hsc-unload-container
 DOCKER_IMAGE_NAME := mongo-hsc-unload-image
+USER := $(shell whoami)
+LOG_FOLDER := /opt/delphix/logs/
 
 define check_python_exists
 	@if ! command -v python3.9 -V >/dev/null 2>&1; then \
@@ -39,7 +41,11 @@ version:
 	@[ -f $(PYTHON) ] && echo $(PYTHON) exists || (echo $(PYTHON) does NOT exist, use \"make env\" to create a virtual env; exit 1)
 
 
-run: --check_env_exists --export_lang
+$(LOG_FOLDER):
+	-sudo mkdir -p $(LOG_FOLDER)
+	-sudo chown -R $(USER) $(LOG_FOLDER)
+
+run: --check_env_exists --export_lang $(LOG_FOLDER)
 	@# Help: Runs the Fast API server on port 8080 using uvicorn
 	-@echo 'Running the app...'
 	-$(UVICORN) src.main:app --host 0.0.0.0 --port 8080 --reload
