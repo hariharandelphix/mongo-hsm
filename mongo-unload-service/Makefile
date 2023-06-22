@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2022, 2023 by Delphix. All rights reserved.
 #
-.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build install version docker-image docker-run docker-stop docker-rm docker-start export-requirements
+.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build version docker-image docker-run docker-stop docker-rm docker-start export-requirements
 
 ROOT_DIR := $(shell pwd)
 VENV := .venv
@@ -49,11 +49,6 @@ run: --check_env_exists --export_lang $(LOG_FOLDER)
 	@# Help: Runs the Fast API server on port 8080 using uvicorn
 	-@echo 'Running the app...'
 	-$(UVICORN) src.main:app --host 0.0.0.0 --port 8080 --reload
-
-install: run
-	@# Help: Installs sdm as an editable package inside python virtual environment
-	-@echo 'Installing sdm with --editable mode using pip'
-	@$(PIP) install -e .
 
 tests:
 	@# Help: Runs the unit tests inside tests folder and create a report
