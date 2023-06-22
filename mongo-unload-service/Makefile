@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2022, 2023 by Delphix. All rights reserved.
 #
-.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build version docker-image docker-run docker-stop docker-rm docker-start export-requirements
+.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build docker-image docker-run docker-stop docker-rm docker-start export-requirements
 
 ROOT_DIR := $(shell pwd)
 VENV := .venv
@@ -24,14 +24,6 @@ define check_python_exists
 		exit 1; \
 	fi
 endef
-
-define show_version
-	@export LC_ALL=en_AU.UTF-8; $(SDM) --version
-endef
-
-version:
-	@# Help: Shows the version of the sdm binary
-	@$(call show_version);
 
 --check_python:
 	@# Help: Checks existence of python virtual environment
@@ -86,7 +78,6 @@ clean_build:
 	@# Help: Cleans the build files
 	-@rm -rf build/
 	-@rm -rf dist/
-	-@rm -f sdm.spec
 
 clean: clean_build
 	@# Help: Cleans the pycache, coverage and build files
@@ -95,7 +86,6 @@ clean: clean_build
 	-@rm -rf tests/.pytest_cache
 	-@rm -rf tests/CodeCoverage
 	-@rm -rf tests/Report.html
-	-@rm -rf sdm.egg-info
 	-@rm -rf .pytest_cache/
 
 docker-image:
