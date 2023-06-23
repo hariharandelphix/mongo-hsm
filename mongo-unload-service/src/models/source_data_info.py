@@ -6,8 +6,8 @@ from sqlalchemy import Column, Integer, Text
 from src.db.connection import Base
 
 
-class SourceData(Base):
-    __tablename__ = "source_data"
+class SourceDataInfo(Base):
+    __tablename__ = "source_data_info"
 
     id = Column(Integer, primary_key=True)
     data = Column(Text, nullable=False)
