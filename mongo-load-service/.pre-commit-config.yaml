@@ -1,0 +1,63 @@
+#
+# Copyright (c) 2023 by Delphix. All rights reserved.
+#
+
+repos:
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v4.3.4
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/jorgetomtz/pre-commit-hooks
+    rev: v0.2.1
+    hooks:
+      - id: copyright-check
+        args: ["-o", "Delphix"]
+        exclude: >
+          (?x)^(
+            .*\.zip|
+            .*__init__.py|
+            .flake8|
+            .github/ISSUE_TEMPLATE/bug_report.md|
+            .github/ISSUE_TEMPLATE/feature_request.md|
+            .gitignore|
+            .isort.cfg|
+            .pre-commit-config.yaml|
+            CODE_OF_CONDUCT.md|
+            CONTRIBUTING.md|
+            Pipfile|
+            README.md|
+            SUPPORT.md|
+            mongo-load-service/Dockerfile|
+            mongo-load-service/.pylintrc|
+            mongo-load-service/.gitignore|
+            db-files/controller-db.sqlite|
+            db-files/load-db.sqlite|
+            db-files/masking-db.sqlite|
+            db-files/unload-db.sqlite|
+            db-files/fast-api-generate/jinja-templates/api-with-doc.jinja2|
+            mongo-load-service/tests/.coveragerc|
+            mongo-load-service/poetry.lock|
+            mongo-load-service/.dockerignore|
+          )$
+
+  - repo: local
+    hooks:
+    - id: pytest-check
+      name: pytest-check
+      stages: [commit]
+      types: [python]
+      entry: mongo-unload-service/run_tests.sh
+      language: script
+      pass_filenames: false
+      always_run: true
