@@ -94,15 +94,15 @@ docker-image:
 
 docker-run: docker-rm docker-image
 	@# Help: Runs the docker container using the created image
-	-@docker run -d -p 8082:8080 --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_NAME)
+	-@docker run -d -p 8081:8080 --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_NAME)
 	-@docker ps
-	-@echo "The $(DOCKER_CONTAINER_NAME) swagger UI can be accessed at http://0.0.0.0:8082"
+	-@echo "The $(DOCKER_CONTAINER_NAME) swagger UI can be accessed at http://0.0.0.0:8081"
 
 docker-start:
 	@# Help: Starts the docker container
 	-@docker start $(DOCKER_CONTAINER_NAME)
 	-@echo "Started the container"
-	-@echo "The $(DOCKER_CONTAINER_NAME) swagger UI can be accessed at http://0.0.0.0:8082"
+	-@echo "The $(DOCKER_CONTAINER_NAME) swagger UI can be accessed at http://0.0.0.0:8081"
 
 docker-stop:
 	@# Help: Stops the docker container
