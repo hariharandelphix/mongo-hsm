@@ -13,8 +13,8 @@ red := $(shell tput setaf 1)
 reset := $(shell tput sgr0)
 SITE_PACKAGE_PATH := $(VENV)/lib/python3.9/site-packages
 REPO := https://artifactory.delphix.com/artifactory/api/pypi/delphix-local
-DOCKER_CONTAINER_NAME := mongo-hsc-unload-container
-DOCKER_IMAGE_NAME := mongo-hsc-unload-image
+DOCKER_CONTAINER_NAME := mongo-hsc-load-container
+DOCKER_IMAGE_NAME := mongo-hsc-load-image
 USER := $(shell whoami)
 LOG_FOLDER := /opt/delphix/logs/
 
