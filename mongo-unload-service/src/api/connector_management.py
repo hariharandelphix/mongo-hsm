@@ -4,8 +4,7 @@
 
 from typing import List, Union
 
-from fastapi import APIRouter, HTTPException, Path
-from pydantic import conint
+from fastapi import APIRouter, HTTPException
 from src.services.connector_management_service import ConnectorService
 from src.validators.connector_validator import Connector, ConnectorResponse
 from starlette import status
@@ -40,11 +39,11 @@ async def create_connector(body: Connector) -> Union[None, ConnectorResponse]:  
     "",
     response_model=List[ConnectorResponse],
 )
-def list_all_connector() -> List[ConnectorResponse]:
+async def list_all_connector() -> List[ConnectorResponse]:
     """
     Returns a list of connectors.
     """
-    connectors = ConnectorService.get_all_connectors()
+    connectors = await ConnectorService.get_all_connectors()
     return [ConnectorResponse(**i.get_dict()) for i in connectors]
 
 
@@ -52,13 +51,11 @@ def list_all_connector() -> List[ConnectorResponse]:
     "/{connector_id}",
     response_model=ConnectorResponse,
 )
-def get_connector(
-    connector_id: conint(ge=1) = Path(..., alias="connectorId")
-) -> ConnectorResponse:
+async def get_connector(connector_id: int) -> ConnectorResponse:
     """
-    Get connector by Id.
+    Get connector by id.
     """
-    connector = ConnectorService.get_connector_by_id(connector_id)
+    connector = await ConnectorService.get_connector_by_id(connector_id)
     if connector:
         return ConnectorResponse(**connector.get_dict())
     raise HTTPException(
@@ -70,24 +67,31 @@ def get_connector(
     "/{connector_id}",
     response_model=ConnectorResponse,
 )
-def update_connector(
-    connector_id: conint(ge=1) = Path(..., alias="connectorId"),
-    body: Connector = ...,  # noqa
-) -> ConnectorResponse:
+async def update_connector(
+    connector_id: int, body: Connector
+) -> ConnectorResponse:  # noqa
     """
     Update a Connector.
     """
-    pass
+    resp = await ConnectorService.update_connector(connector_id, body)
+    if resp:
+        return ConnectorResponse(**resp.get_dict())
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND, detail="Connector Not Found"
+    )
 
 
 @router.delete(
     "/{connector_id}",
     response_model=None,
 )
-def delete_connector(
-    connector_id: conint(ge=1) = Path(..., alias="connectorId")
-) -> None:
+async def delete_connector(connector_id: int) -> None:
     """
     Remove a Connector.
     """
-    pass
+    connector = await ConnectorService.delete_connector_by_id(connector_id)
+    if connector:
+        return ConnectorResponse(**connector.get_dict())
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND, detail="Connector Not Found"
+    )

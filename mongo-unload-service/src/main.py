@@ -76,4 +76,4 @@ async def docs_redirect():
 # #### For Debugging on Local #####
 # if __name__ == "__main__":
 #     from uvicorn import run as runserver
-#     runserver("src.main:app", host="0.0.0.0", port=8080)
+#     runserver("src.main:app", host="0.0.0.0", port=8080, reload=True)

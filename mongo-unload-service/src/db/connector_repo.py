@@ -18,8 +18,8 @@ class ConnectorRepository:
         self.db: Session = get_db().__next__()
 
     async def create(self, payload: dict):
+        new_connector = Connector(**payload)
         try:
-            new_connector = Connector(**payload)
             self.db.add(new_connector)
             self.db.commit()
             self.db.refresh(new_connector)
@@ -27,22 +27,30 @@ class ConnectorRepository:
         except IntegrityError:
             self.db.rollback()
 
-    def get_by_id(self, _id: str):
-        return self.db.query(Connector).filter(Connector.id == _id).first()
+    async def get_by_id(self, _id: str):
+        return self.db.query(Connector).filter(Connector.id == _id).first()  # noqa
 
-    def get_all(self):
+    async def get_all(self):
         connectors = self.db.query(Connector).all()
         return connectors
 
-    # async def delete(self,item_id: str):
-    #     db_item= self.db.query(models.Task).filter_by(id=item_id).first()
-    #     self.db.delete(db_item)
-    #     self.db.commit()
+    async def delete(self, _id: str):
+        connector = self.db.query(Connector).filter_by(id=_id).first()
+        if connector:
+            self.db.delete(connector)
+            self.db.commit()
+            return connector
+        return None
 
-    # async def update(self, item_data):
-    #     updated_item = self.db.merge(item_data)
-    #     self.db.commit()
-    #     return updated_item
+    async def update(self, payload: dict):
+        updated_connector = Connector(**payload)
+        existing_connector = (
+            self.db.query(Connector).filter_by(id=payload["id"]).first()
+        )
+        if existing_connector:
+            self.db.merge(updated_connector)
+            self.db.commit()
+        return existing_connector
 
 
 connector_repo = ConnectorRepository()

@@ -30,6 +30,9 @@ metadata = Base.metadata
 
 
 def create_all():
+    # TODO: explore inside gunicorn, sleep between workers start so
+    #       that tables get created by 1st worker and there is no
+    #       conflict of table creation by other workers
     logger.debug("Creating all tables...")
     metadata.create_all(bind=engine)
 

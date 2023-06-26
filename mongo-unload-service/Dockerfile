@@ -48,7 +48,7 @@ RUN set -ex &&  \
     adduser --system --uid 1001 --gid 1001 --no-create-home appuser && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y wget && \
+    apt-get install -y wget sqlite3 && \
     pip install --no-cache-dir -r requirements.txt && \
     wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-rhel80-x86_64-100.7.2.tgz && \
     wget https://downloads.mongodb.com/compass/mongosh-1.10.0-linux-x64.tgz && \
@@ -64,7 +64,8 @@ RUN set -ex &&  \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /opt/delphix/logs/ &&  \
-    chown -R appuser:appgroup /opt/delphix/logs/
+    chown -R appuser:appgroup /opt/delphix/logs/ && \
+    chown -R appuser:appgroup /app
 
 COPY ./container_conf/app_files/* /app
 COPY ./container_conf/root_files/* /
