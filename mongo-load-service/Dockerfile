@@ -66,8 +66,7 @@ RUN set -ex &&  \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /opt/delphix/logs/ &&  \
     chown -R delphix:delphix /opt/delphix/logs/ && \
-    mkdir /data && \
-    chown -R delphix:delphix /data
+    chown -R delphix:delphix /app
 
 COPY ./container_conf/app_files/* /app
 COPY ./container_conf/root_files/* /
