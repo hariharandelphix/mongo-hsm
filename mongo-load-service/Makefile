@@ -14,7 +14,7 @@ reset := $(shell tput sgr0)
 SITE_PACKAGE_PATH := $(VENV)/lib/python3.9/site-packages
 REPO := https://artifactory.delphix.com/artifactory/api/pypi/delphix-local
 DOCKER_CONTAINER_NAME := mongo-hsc-load-container
-DOCKER_IMAGE_NAME := mongo-hsc-load-image
+DOCKER_IMAGE_NAME := delphix-mongo-load-service-app
 USER := $(shell whoami)
 LOG_FOLDER := /opt/delphix/logs/
 
