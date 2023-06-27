@@ -45,8 +45,8 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
 # Clean up
 # Create folder for log and assign permissions
 RUN set -ex &&  \
-    addgroup --system --gid 1001 appgroup &&  \
-    adduser --system --uid 1001 --gid 1001 --no-create-home appuser && \
+    addgroup --system --gid 1001 delphix &&  \
+    adduser --system --uid 1001 --gid 1001 --no-create-home delphix && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y wget sqlite3 && \
@@ -65,14 +65,15 @@ RUN set -ex &&  \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /opt/delphix/logs/ &&  \
-    chown -R appuser:appgroup /opt/delphix/logs/ && \
-    chown -R appuser:appgroup /app
+    chown -R delphix:delphix /opt/delphix/logs/ && \
+    mkdir /data && \
+    chown -R delphix:delphix /data
 
 COPY ./container_conf/app_files/* /app
 COPY ./container_conf/root_files/* /
 COPY ./src /app/src
 
 # Set the user to run the application
-USER appuser
+USER delphix
 
 ENTRYPOINT ["../start.sh"]
