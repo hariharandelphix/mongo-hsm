@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2022, 2023 by Delphix. All rights reserved.
 #
-.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build docker-image docker-run docker-stop docker-rm docker-start export-requirements
+.PHONY: --check_python --check_env_exists run tests --create_virtual_env --install_dependencies env clean_build clean_env clean build docker-image docker-run docker-stop docker-rm docker-start docker-save export-requirements
 
 ROOT_DIR := $(shell pwd)
 VENV := .venv
@@ -15,6 +15,7 @@ SITE_PACKAGE_PATH := $(VENV)/lib/python3.9/site-packages
 REPO := https://artifactory.delphix.com/artifactory/api/pypi/delphix-local
 DOCKER_CONTAINER_NAME := mongo-hsc-unload-container
 DOCKER_IMAGE_NAME := delphix-mongo-unload-service-app
+DOCKER_BUILD_NAME := mongo-unload-service.tar
 USER := $(shell whoami)
 LOG_FOLDER := /opt/delphix/logs/
 VERSION := latest
@@ -115,6 +116,11 @@ docker-rm: docker-stop
 	-@docker rm $(DOCKER_CONTAINER_NAME)
 	-@docker image rm $(DOCKER_IMAGE_NAME):$(VERSION)
 	-@echo "Removed the container and image"
+
+docker-save: clean_build docker-image
+	@# Help: Save the docker images to build folder
+	-@mkdir build
+	-@docker save $(DOCKER_IMAGE_NAME):$(VERSION) -o build/$(DOCKER_BUILD_NAME)
 
 --export_lang:
 	LC_ALL=en_AU.UTF-8
