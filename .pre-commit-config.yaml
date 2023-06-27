@@ -38,14 +38,20 @@ repos:
             Pipfile|
             README.md|
             SUPPORT.md|
-            mongo-load-service/Dockerfile|
-            mongo-load-service/.pylintrc|
-            mongo-load-service/.gitignore|
             db-files/controller-db.sqlite|
             db-files/load-db.sqlite|
             db-files/masking-db.sqlite|
             db-files/unload-db.sqlite|
             db-files/fast-api-generate/jinja-templates/api-with-doc.jinja2|
+            mongo-unload-service/Dockerfile|
+            mongo-unload-service/.pylintrc|
+            mongo-unload-service/.gitignore|
+            mongo-unload-service/tests/.coveragerc|
+            mongo-unload-service/poetry.lock|
+            mongo-unload-service/.dockerignore|
+            mongo-load-service/Dockerfile|
+            mongo-load-service/.pylintrc|
+            mongo-load-service/.gitignore|
             mongo-load-service/tests/.coveragerc|
             mongo-load-service/poetry.lock|
             mongo-load-service/.dockerignore|
