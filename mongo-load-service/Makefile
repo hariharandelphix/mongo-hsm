@@ -17,6 +17,7 @@ DOCKER_CONTAINER_NAME := mongo-hsc-load-container
 DOCKER_IMAGE_NAME := delphix-mongo-load-service-app
 USER := $(shell whoami)
 LOG_FOLDER := /opt/delphix/logs/
+VERSION := latest
 
 define check_python_exists
 	@if ! command -v python3.9 -V >/dev/null 2>&1; then \
@@ -90,11 +91,11 @@ clean: clean_build
 
 docker-image:
 	@# Help: Creates the docker image
-	-@docker build -t $(DOCKER_IMAGE_NAME) .
+	-@docker build -t $(DOCKER_IMAGE_NAME):$(VERSION) .
 
 docker-run: docker-rm docker-image
 	@# Help: Runs the docker container using the created image
-	-@docker run -d -p 8081:8080 --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_NAME)
+	-@docker run -d -p 8081:8080 --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_NAME):$(VERSION)
 	-@docker ps
 	-@echo "The $(DOCKER_CONTAINER_NAME) swagger UI can be accessed at http://0.0.0.0:8081"
 
@@ -112,7 +113,7 @@ docker-stop:
 docker-rm: docker-stop
 	@# Help: Removes the docker container
 	-@docker rm $(DOCKER_CONTAINER_NAME)
-	-@docker image rm $(DOCKER_IMAGE_NAME)
+	-@docker image rm $(DOCKER_IMAGE_NAME):$(VERSION)
 	-@echo "Removed the container and image"
 
 --export_lang:
