@@ -35,7 +35,8 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
     PIP_NO_CACHE_DIR=1 \
     MODULE_NAME=src.main \
     PORT=8080 \
-    LOG_LEVEL=debug
+    LOG_LEVEL=debug \
+    MAX_WORKERS=1
 
 # Create a non-root user
 # Upgrade the package index and install security upgrades
