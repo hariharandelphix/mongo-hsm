@@ -7,6 +7,7 @@ import logging
 from fastapi import APIRouter
 from src.config import get_config
 from src.validators.api_version import ApiVersion
+from starlette import status
 
 config = get_config()
 logger = logging.getLogger("app-logger")
@@ -14,7 +15,7 @@ logger = logging.getLogger("app-logger")
 router = APIRouter(
     prefix="/api-version",
     tags=["ApiVersion"],
-    responses={404: {"description": "Not found"}},
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
 

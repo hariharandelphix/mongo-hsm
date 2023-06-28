@@ -12,14 +12,14 @@ from starlette import status
 router = APIRouter(
     prefix="/connectors",
     tags=["ConnectorManagement"],
-    responses={404: {"description": "Not found"}},
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
 
 @router.post(
     "",
     response_model=None,
-    responses={"201": {"model": ConnectorResponse}},
+    responses={status.HTTP_201_CREATED: {"model": ConnectorResponse}},
     status_code=status.HTTP_201_CREATED,
 )
 async def create_connector(body: Connector) -> Union[None, ConnectorResponse]:  # noqa
