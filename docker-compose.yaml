@@ -55,6 +55,8 @@ services:
   masking-service:
     image: delphix-masking-service-app:8.0.0
     init: true
+    ports:
+      - "8083:8080"
     networks:
       - hyperscale-net
     restart: unless-stopped
