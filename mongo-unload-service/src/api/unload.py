@@ -4,14 +4,18 @@
 
 from typing import Union
 
-from fastapi import APIRouter, Path
+from fastapi import APIRouter
+from fastapi import Path
 from pydantic import conint
-from src.validators.unload_validator import (ExecutionStatus, SourceData,
-                                             Unload, UnloadResponse)
+from src.validators.unload_validator import ExecutionStatus
+from src.validators.unload_validator import SourceData
+from src.validators.unload_validator import Unload
+from src.validators.unload_validator import UnloadResponse
+from starlette import status
 
 router = APIRouter(
     tags=["UnloadProcess"],
-    responses={404: {"description": "Not found"}},
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
 
@@ -19,7 +23,7 @@ router = APIRouter(
     "/unload",
     response_model=None,
     summary="Create a unload process to unload data to files from the source database.",  # noqa
-    responses={"201": {"model": UnloadResponse}},
+    responses={status.HTTP_201_CREATED: {"model": UnloadResponse}},
 )
 def create_unload(body: Unload) -> Union[None, UnloadResponse]:
     """

@@ -2,27 +2,32 @@
 # Copyright (c) 2023 by Delphix. All rights reserved.
 #
 
-from typing import List, Union
+from typing import List
+from typing import Union
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
+from fastapi import HTTPException
 from src.services.connector_management_service import ConnectorService
-from src.validators.connector_validator import Connector, ConnectorResponse
+from src.validators.connector_validator import Connector
+from src.validators.connector_validator import ConnectorResponse
 from starlette import status
 
 router = APIRouter(
     prefix="/connectors",
     tags=["ConnectorManagement"],
-    responses={404: {"description": "Not found"}},
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
 
 @router.post(
     "",
     response_model=None,
-    responses={"201": {"model": ConnectorResponse}},
+    responses={status.HTTP_201_CREATED: {"model": ConnectorResponse}},
     status_code=status.HTTP_201_CREATED,
 )
-async def create_connector(body: Connector) -> Union[None, ConnectorResponse]:  # noqa
+async def create_connector(
+    body: Connector,
+) -> Union[None, ConnectorResponse]:  # noqa
     """
     Create Connector.
     """

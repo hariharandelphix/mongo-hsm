@@ -3,11 +3,13 @@
 #
 
 
-from typing import List, Union
+from typing import List
+from typing import Union
 
 from fastapi import APIRouter
 from pydantic import conint
 from src.validators.data_set_validator import DataSet
+from starlette import status
 
 router = APIRouter()
 
@@ -16,7 +18,7 @@ router = APIRouter()
     "/data-sets",
     response_model=None,
     summary="Create a Data Set.",
-    responses={"201": {"model": DataSet}},
+    responses={status.HTTP_201_CREATED: {"model": DataSet}},
     tags=["DataSets"],
 )
 def create_data_set(body: DataSet) -> Union[None, DataSet]:
