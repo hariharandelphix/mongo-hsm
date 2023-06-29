@@ -11,7 +11,9 @@ from fastapi.responses import RedirectResponse
 from src.api.api_version import router as api_version_router
 from src.api.connector_management import router as connector_router
 from src.api.data_set import router as data_set_router
-from src.config import get_config, log_config
+from src.api.loads import router as loads_router
+from src.config import get_config
+from src.config import log_config
 from src.db.connection import create_all
 
 # handle the gunicorn log handler
@@ -44,6 +46,7 @@ sub_app = FastAPI(
 sub_app.include_router(api_version_router)
 sub_app.include_router(connector_router)
 sub_app.include_router(data_set_router)
+sub_app.include_router(loads_router)
 
 
 app.mount("/api", sub_app)
