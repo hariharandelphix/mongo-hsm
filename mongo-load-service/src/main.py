@@ -10,7 +10,7 @@ from fastapi.logger import logger as fastapi_logger
 from fastapi.responses import RedirectResponse
 from src.api.api_version import router as api_version_router
 from src.api.connector_management import router as connector_router
-from src.api.executions import router as executions_router
+from src.api.data_set import router as data_set_router
 from src.config import get_config, log_config
 from src.db.connection import create_all
 
@@ -43,7 +43,8 @@ sub_app = FastAPI(
 # register the routers for APIs
 sub_app.include_router(api_version_router)
 sub_app.include_router(connector_router)
-sub_app.include_router(executions_router)
+sub_app.include_router(data_set_router)
+
 
 app.mount("/api", sub_app)
 logger = logging.getLogger("app-logger")
