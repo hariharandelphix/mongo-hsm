@@ -37,3 +37,20 @@ This will run all the unit tests and generate the pytest and coverage reports.
 
     make tests
 
+
+## Migrations for DB changes
+
+This will be required when we create migrations for Database Model changes
+
+Steps:
+1. Change the model file inside src/models
+2. Run `alembic upgrade head` to bring the database to the current state
+3. To auto generate migrations run `alembic revision --autogenerate -m "change message"`
+    This will generate the migration file inside `migrations/versions`
+4. Edit this migration file and update the revision number to an Integer which will be `down_revision`+1 
+   
+   example: 
+   
+   <pre>revision = '3'
+   down_revision = '2'
+   </pre>

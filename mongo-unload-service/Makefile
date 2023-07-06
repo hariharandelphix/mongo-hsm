@@ -9,6 +9,7 @@ PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 POETRY := $(VENV)/bin/poetry
 UVICORN := $(VENV)/bin/uvicorn
+ALEMBIC := $(VENV)/bin/alembic
 red := $(shell tput setaf 1)
 reset := $(shell tput sgr0)
 SITE_PACKAGE_PATH := $(VENV)/lib/python3.9/site-packages
@@ -41,6 +42,7 @@ $(LOG_FOLDER):
 
 run: --check_env_exists --export_lang $(LOG_FOLDER)
 	@# Help: Runs the Fast API server on port 8080 using uvicorn
+	-@$(ALEMBIC) upgrade head
 	-@echo 'Running the app...'
 	-$(UVICORN) src.main:app --host 0.0.0.0 --port 8080 --reload
 

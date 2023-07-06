@@ -28,7 +28,9 @@ class ConnectorRepository:
             self.db.rollback()
 
     async def get_by_id(self, _id: str):
-        return self.db.query(Connector).filter(Connector.id == _id).first()  # noqa
+        return (
+            self.db.query(Connector).filter(Connector.id == _id).first()
+        )  # noqa
 
     async def get_all(self):
         connectors = self.db.query(Connector).all()
@@ -50,7 +52,8 @@ class ConnectorRepository:
         if existing_connector:
             self.db.merge(updated_connector)
             self.db.commit()
-        return existing_connector
+            return updated_connector
+        return None
 
 
 connector_repo = ConnectorRepository()

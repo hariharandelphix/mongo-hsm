@@ -46,6 +46,7 @@ repos:
             .*poetry.lock|
             .*.dockerignore|
             .*Dockerfile|
+            .*mako|
           )$
 
   - repo: local
