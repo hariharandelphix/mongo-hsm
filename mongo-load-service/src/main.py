@@ -14,7 +14,8 @@ from src.api.data_set import router as data_set_router
 from src.api.loads import router as loads_router
 from src.config import get_config
 from src.config import log_config
-from src.db.connection import create_all
+
+# from src.db.connection import create_all
 
 # handle the gunicorn log handler
 gunicorn_logger = logging.getLogger("gunicorn.error")
@@ -59,12 +60,12 @@ logger.error("Sample ERROR Log")
 logger.debug("Sample DEBUG Log")
 
 
-@app.on_event("startup")
-async def startup():
-    """
-    This function creates the database tables when the server starts.
-    """
-    create_all()
+# @app.on_event("startup")
+# async def startup():
+#     """
+#     This function creates the database tables when the server starts.
+#     """
+#     create_all()
 
 
 @app.get("/", include_in_schema=False)

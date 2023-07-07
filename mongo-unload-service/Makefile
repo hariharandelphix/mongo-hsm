@@ -59,7 +59,7 @@ tests:
 	@# Help: Installs the dev dependencies using poetry
 	-@echo 'Installing Dependencies...'
 	@$(PYTHON) -m pip install --upgrade pip
-	@$(PIP) install ç-py==0.7.1
+	@$(PIP) install rpds-py==0.7.1
 	@$(PIP) install poetry==1.5.1
 	@$(POETRY) config virtualenvs.in-project true
 	@$(POETRY) config --list

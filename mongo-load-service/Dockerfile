@@ -36,7 +36,7 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
     MODULE_NAME=src.main \
     PORT=8080 \
     LOG_LEVEL=debug \
-    MAX_WORKERS=1
+    LOG_LEVEL=debug
 
 # Create a non-root user
 # Upgrade the package index and install security upgrades
@@ -68,8 +68,9 @@ RUN set -ex &&  \
     chown -R delphix:delphix /opt/delphix/logs/ && \
     chown -R delphix:delphix /app
 
-COPY ./container_conf/app_files/* /app
+COPY ./container_conf/app_files/* ./alembic.ini /app/
 COPY ./container_conf/root_files/* /
+COPY ./migrations /app/migrations
 COPY ./src /app/src
 
 # Set the user to run the application

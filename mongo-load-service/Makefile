@@ -9,6 +9,7 @@ PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 POETRY := $(VENV)/bin/poetry
 UVICORN := $(VENV)/bin/uvicorn
+ALEMBIC := $(VENV)/bin/alembic
 red := $(shell tput setaf 1)
 reset := $(shell tput sgr0)
 SITE_PACKAGE_PATH := $(VENV)/lib/python3.9/site-packages
@@ -41,6 +42,7 @@ $(LOG_FOLDER):
 
 run: --check_env_exists --export_lang $(LOG_FOLDER)
 	@# Help: Runs the Fast API server on port 8080 using uvicorn
+	-@$(ALEMBIC) upgrade head
 	-@echo 'Running the app...'
 	-$(UVICORN) src.main:app --host 0.0.0.0 --port 8080 --reload
 
@@ -57,6 +59,7 @@ tests:
 	@# Help: Installs the dev dependencies using poetry
 	-@echo 'Installing Dependencies...'
 	@$(PYTHON) -m pip install --upgrade pip
+	@$(PIP) install rpds-py==0.7.1
 	@$(PIP) install poetry==1.5.1
 	@$(POETRY) config virtualenvs.in-project true
 	@$(POETRY) config --list

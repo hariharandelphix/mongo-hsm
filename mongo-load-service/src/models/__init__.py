@@ -1,27 +1,6 @@
-# coding: utf-8
-from sqlalchemy import Column, Integer, Text
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-metadata = Base.metadata
-
-
-class DataSetJobMapping(Base):
-    __tablename__ = "data_set_job_mapping"
-
-    id = Column(Integer, primary_key=True)
-    data = Column(Text, nullable=False)
-
-
-class Load(Base):
-    __tablename__ = "load"
-
-    id = Column(Integer, primary_key=True)
-    data = Column(Text, nullable=False)
-
-
-class PostLoad(Base):
-    __tablename__ = "post_load"
-
-    id = Column(Integer, primary_key=True)
-    data = Column(Text, nullable=False)
+from .connector import Connector  # noqa
+from .data_set import DataSet  # noqa
+from .data_info import DataInfo  # noqa
+from .data_set_job_mapping import DataSetJobMapping  # noqa
+from .load import Load  # noqa
+from .post_load import PostLoad  # noqa
