@@ -5,5 +5,11 @@
 
 echo 'Working directory' `pwd`
 cd mongo-unload-service
+
 make tests
-make clean
+exit_status=$?
+if [ $exit_status -ne 0 ]; then
+    echo "make tests failed with exit status: $exit_status"
+    make clean
+    exit $exit_status
+fi

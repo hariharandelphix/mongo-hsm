@@ -6,7 +6,7 @@
 name = "mongo-unload-service"
 version = "1.0.0"
 description = "Mongo Hyperscale Compliance Unload Service"
-authors = ["rohit.shende <rohit.shende@delphix.com>"]
+authors = []
 readme = "README.md"
 packages = [{include = "mongo_unload_service"}]
 
