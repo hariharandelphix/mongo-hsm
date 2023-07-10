@@ -1,8 +1,8 @@
 [//]: # (Copyright \(c\) 2023 by Delphix. All rights reserved.)
 
-# Mongo Hyperscale Compliance Unload Service
+# Mongo Hyperscale Compliance Load Service
 
-This is an unload service created for Mongo DB.
+This is an load service created for Mongo DB.
 
 ## Development:
 

@@ -125,9 +125,6 @@ docker-save: clean_build docker-image
 	-@mkdir build
 	-@docker save $(DOCKER_IMAGE_NAME):$(VERSION) -o build/$(DOCKER_BUILD_NAME)
 
-#docker save delphix-mongo-unload-service-app:${VERSION} -o build/mongo-unload-service.tar || die "Fa
- #iled to docker save mongo-unload-service.tar for mongo-unload-service"
-
 --export_lang:
 	LC_ALL=en_AU.UTF-8
 	PYTHONPATH=$(ROOT_DIR)

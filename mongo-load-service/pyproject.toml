@@ -3,12 +3,12 @@
 #
 
 [tool.poetry]
-name = "mongo-unload-service"
+name = "mongo-load-service"
 version = "1.0.0"
-description = "Mongo Hyperscale Compliance Unload Service"
-authors = ["rohit.shende <rohit.shende@delphix.com>"]
+description = "Mongo Hyperscale Compliance Load Service"
+authors = []
 readme = "README.md"
-packages = [{include = "mongo_unload_service"}]
+packages = [{include = "mongo_load_service"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
